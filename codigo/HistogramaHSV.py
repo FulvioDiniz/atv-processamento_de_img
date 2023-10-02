@@ -1,0 +1,25 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+img = cv2.imread('./img/9913/128.jpg')
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+h, s, v = cv2.split(hsv)
+hist_hue = cv2.calcHist([h], [0], None, [256], [0, 256])
+hist_saturation = cv2.calcHist([s], [0], None, [256], [0, 256])
+hist_value = cv2.calcHist([v], [0], None, [256], [0, 256])
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+plt.title('Imagem Original')
+plt.subplot(1, 2, 2)
+plt.plot(hist_hue, color='r', label='Hue (Matiz)')
+plt.plot(hist_saturation, color='g', label='Saturation (Saturação)')
+plt.plot(hist_value, color='b', label='Value (Valor)')
+plt.title('Histograma - HSV')
+plt.xlabel('Valor do Pixel')
+plt.ylabel('Número de Pixels')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
